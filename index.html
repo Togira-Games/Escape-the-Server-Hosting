@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Escape the Server!</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="loading-container">
+        <h2 class="loading-text text-center">
+            <span id="char1" class="char animation-text1" style="color: red">ESCAPE THE SERVER</span>
+            <span id="char2" class="char animation-text1">IS CURRENTLY</span>
+            <span id="char3" class="char animation-text1">LOADING</span>
+        </h2>
+        <h2 class="loading-dot text-center" style="margin-left: 5px;">
+            <span id="dot1" class="dot animation1" style="color: red">.</span>
+            <span id="dot2" class="dot animation1">.</span>
+            <span id="dot3" class="dot animation1">.</span>
+        </h2>
+        <div id="status">
+            <div id="status-progress" style="display: block; text-align: center;">
+                <div id="status-progress-inner"></div>
+            </div>
+        </div>
+    </div>
+    <canvas id="canvas"></canvas>
+
+    <script src="index.js"></script>
+    <script>
+        var engine = new Engine({"args":[],"canvasResizePolicy":2,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":34089888,"index.wasm":33728994},"focusCanvas":true,"gdextensionLibs":[]});
+        const loadingText = document.querySelector('.loading-text .char');
+        const dot = document.querySelector('.loading-dot');
+        const statusProgressInner = document.getElementById('status-progress-inner');
+
+        engine.startGame({
+            'executable': '.proxy/index',
+            'onProgress': function (current, total) {
+                if (total > 0) {
+                    statusProgressInner.style.width = `${(current / total) * 100}%`;
+                }
+            },
+        });
+
+        setTimeout(() => {
+            document.querySelectorAll('.loading-text .char').forEach(char => {
+                char.style.opacity = 1;
+            });
+            document.querySelectorAll('.loading-dot .dot').forEach(dot => {
+                dot.style.opacity = 1;
+            });
+        }, 3000);
+        setTimeout(() => {
+            startSecondAnimation(0);
+            const charText = document.getElementById("char3");
+        }, 4130);
+        setTimeout(() => {
+            startSecondAnimation(1);
+            const charText = document.getElementById("char3");
+        }, 4460);
+        setTimeout(() => {
+            startSecondAnimation(2);
+            const charText = document.getElementById("char3");
+        }, 4790);
+
+        function startSecondAnimation(index) {
+            dot.querySelectorAll('.dot').forEach((dot, ind) => {
+                if (ind === index) {
+                    dot.classList.remove("animation1");
+                    dot.style.animationDelay = `0s`;
+                    dot.classList.add("animation2");
+                    dot.style.animationPlayState = 'running';
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>
+
+
